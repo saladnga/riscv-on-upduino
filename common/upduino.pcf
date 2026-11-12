@@ -1,0 +1,6 @@
+# Upduino v3.0 pins used by this project
+# RGB LED: dedicated driver pins
+
+set_io -nowarn led_green 39
+set_io -nowarn led_blue 40
+set_io -nowarn led_red 41
