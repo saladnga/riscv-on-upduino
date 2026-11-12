@@ -1,0 +1,12 @@
+# FPGA build outputs
+*.json
+*.asc
+*.bin
+# RISC-V build outputs
+*.o
+*.elf
+*.hex
+# simulation
+*.vcd
+a.out
+.DS_Store
