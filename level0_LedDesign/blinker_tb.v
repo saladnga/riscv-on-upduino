@@ -7,13 +7,16 @@ module blinker_tb;
     reg clk = 0;
     wire [2:0] led;
 
+    // Device under test: 4-bit counter for a short simulation
     blinker #(.BITS(4)) dut (
         .clk(clk),
         .led(led)
     );
 
+    // Clock: one tick every 2 ns
     always #1 clk = ~clk;
 
+    // Record the waveform, print values, then stop
     initial begin
         $dumpfile("blinker.vcd");
         $dumpvars(0, blinker_tb);

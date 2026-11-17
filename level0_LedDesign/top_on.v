@@ -9,6 +9,7 @@ module top_on (
     output wire led_blue
 );
 
+    // LED driver: fixed values, only green on
     SB_RGBA_DRV #(
         .RGB0_CURRENT("0b000001"),
         .RGB1_CURRENT("0b000001"),

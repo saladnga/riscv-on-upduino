@@ -9,6 +9,7 @@ module breathe #(
     output wire [7:0] bright
 );
 
+    // Counter; level = the 8 bits below the top bit
     reg [N-1:0] count = 0;
     wire [7:0] level = count[N-2:N-9];
     
@@ -16,6 +17,7 @@ module breathe #(
         count <= count + 1;
     end
 
+    // Output: top bit 0 = level (up), top bit 1 = ~level (down)
     assign bright = count[N-1] ? ~level : level;
         
 endmodule

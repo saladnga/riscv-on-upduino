@@ -2,15 +2,18 @@
 # then: make clean && make flash (or: make TOP=top_blink flash)
 # Tests (no board): make sim | sim_pwm | sim_breathe
 
-TOP = top_on
+# TOP = top_on
 # TOP = top_blink
 # TOP = top_colors
-# TOP = top_breathe
+TOP = top_breathe
 
+# Pin map
 PCF = ../common/upduino.pcf
 
+# Verilog files to build
 SRCS = $(TOP).v blinker.v pwm.v breathe.v
 
+# Build: Verilog -> netlist (.json) -> placed (.asc) -> bitstream (.bin)
 $(TOP).bin: $(TOP).asc
 		icepack $< $@
 
@@ -20,9 +23,11 @@ $(TOP).asc: $(TOP).json $(PCF)
 $(TOP).json: $(SRCS)
 		yosys -q -p "synth_ice40 -top $(TOP) -json $@" $(SRCS)
 
+# Program the board
 flash: $(TOP).bin
 		iceprog -d i:0x0403:0x6014 $<
 
+# Simulations
 sim: blinker_tb.v blinker.v
 		iverilog blinker_tb.v blinker.v
 		vvp a.out
@@ -35,6 +40,7 @@ sim_breathe: breathe_tb.v breathe.v
 		iverilog breathe_tb.v breathe.v
 		vvp a.out
 
+# Remove build outputs
 clean:
 		rm -f *.json *.asc *.bin
 

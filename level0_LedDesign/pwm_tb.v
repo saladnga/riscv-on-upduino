@@ -8,14 +8,17 @@ module pwm_tb;
     wire out;
     reg [3:0] duty = 4;
 
+    // Device under test: 4-bit counter for a short simulation
     pwm #(.WIDTH(4)) dut (
         .clk(clk),
         .out(out),
         .duty(duty)
     );
 
+    // Clock: one tick every 2 ns
     always #1 clk = ~clk;
 
+    // Record the waveform, print values, then stop
     initial begin
         $dumpfile("pwm.vcd");
         $dumpvars(0, pwm_tb);

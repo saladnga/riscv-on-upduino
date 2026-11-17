@@ -9,6 +9,7 @@ module top_breathe (
     output wire led_blue
 );
 
+    // Clock: internal oscillator, 12 MHz
     wire clk;
 
     SB_HFOSC #(
@@ -19,12 +20,14 @@ module top_breathe (
         .CLKHF(clk)
     );
 
+    // Brightness ramp: 0 -> 255 -> 0
     wire [7:0] bright;
     breathe br (
         .clk(clk),
         .bright(bright)
     );
 
+    // PWM: brightness number -> fast on/off
     wire glow;
     pwm p (
         .clk(clk),
@@ -32,6 +35,7 @@ module top_breathe (
         .out(glow)
     );
 
+    // LED driver: PWM output to green
     SB_RGBA_DRV #(
         .RGB0_CURRENT("0b000001"),
         .RGB1_CURRENT("0b000001"),

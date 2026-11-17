@@ -9,12 +9,14 @@ module blinker #(
     output wire [2:0] led
 );
 
+    // Counter: +1 every tick
     reg [BITS-1:0] count = 0;
 
     always @(posedge clk) begin
         count <= count + 1;
     end
 
+    // Output: the 3 slowest bits
     assign led = count[BITS-1:BITS-3];
     
 endmodule

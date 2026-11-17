@@ -7,13 +7,16 @@ module breathe_tb;
     reg clk = 0;
     wire [7:0] bright;
 
+    // Device under test: 10-bit counter for a short simulation
     breathe #(.N(10)) dut (
         .clk(clk),
         .bright(bright)
     );
 
+    // Clock: one tick every 2 ns
     always #1 clk = ~clk;
 
+    // Record the waveform, print values, then stop
     initial begin
         $dumpfile("breathe.vcd");
         $dumpvars(0, breathe_tb);

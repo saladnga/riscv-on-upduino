@@ -9,6 +9,7 @@ module top_blink (
     output wire led_blue
 );
 
+    // Clock: internal oscillator, 12 MHz
     wire clk;
 
     SB_HFOSC #(
@@ -19,6 +20,7 @@ module top_blink (
         .CLKHF(clk)
     );
 
+    // Counter: 3 slow bits
     wire [2:0] blink;
 
     blinker #(.BITS(24)) b (
@@ -26,6 +28,7 @@ module top_blink (
         .led(blink)
     );
 
+    // LED driver: one counter bit to green
     SB_RGBA_DRV #(
         .RGB0_CURRENT("0b000001"),
         .RGB1_CURRENT("0b000001"),

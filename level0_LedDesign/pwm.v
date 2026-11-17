@@ -10,12 +10,14 @@ module pwm #(
     output wire out
 );
 
+    // Counter: sweeps 0 to 2^WIDTH - 1, over and over
     reg [WIDTH-1:0] count = 0;
 
     always @(posedge clk) begin
         count <= count + 1;
     end
 
+    // Output: on while count is below duty
     assign out = (count < duty);
     
 endmodule
