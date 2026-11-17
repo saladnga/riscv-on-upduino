@@ -10,3 +10,4 @@
 *.vcd
 a.out
 .DS_Store
+delay.txt
