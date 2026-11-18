@@ -39,8 +39,7 @@ module soc_tb;
         if (dut.mem_valid && dut.mem_ready && dut.mem_addr == 32'h02000004 && dut.mem_wstrb == 4'hf) begin
             // Compare the CPU's value with the golden model
             if (dut.mem_wdata != fib_a) begin
-                $display("FAIL: n=%0d expected %0d, saw %0d", count, fib_a, dut.mem_wdata);
-                $finish;
+                $fatal(1, "FAIL: n=%0d expected %0d, saw %0d", count, fib_a, dut.mem_wdata);
             end else begin
                 // Step the model: <= reads the old values, so this is
                 // (a, b) -> (b, a + b) with no temp variable
@@ -59,8 +58,7 @@ module soc_tb;
 
     // Timeout: FAIL if PASS hasn't happened by 200,000 ns
     initial begin
-        #200000 $display("FAIL: timeout, no Fibonacci output.");
-        $finish;
+        #200000 $fatal(1, "FAIL: timeout, no Fibonacci output.");
     end
 
 endmodule

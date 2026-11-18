@@ -1,0 +1,21 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  sim:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install simulation and RISC-V toolchain
+        run: sudo apt-get update && sudo apt-get install -y iverilog gcc-riscv64-unknown-elf
+
+      - name: Run simulations for all levels
+        run: |
+          set -o pipefail
+          for level in level1_SystemOnChip level2_icebram level3_fibonacci; do
+            make -C "$level" sim CROSS=riscv64-unknown-elf- | tee "$level.log"
+            grep -q "^PASS" "$level.log"
+          done

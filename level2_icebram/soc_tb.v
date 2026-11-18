@@ -33,8 +33,7 @@ module soc_tb;
     always @(led) begin
         if (resetn) begin
             if (led != expected) begin
-                $display("FAIL: expected %0d, saw %0d", expected, led);
-                $finish;
+                $fatal(1, "FAIL: expected %0d, saw %0d", expected, led);
             end else begin
                 expected = expected + 1;
                 changes = changes + 1;
@@ -50,8 +49,7 @@ module soc_tb;
 
     // Timeout: FAIL if PASS hasn't happened by 200,000 ns
     initial begin
-        #200000 $display("FAIL: timeout, LED stopped changing.");
-        $finish;
+        #200000 $fatal(1, "FAIL: timeout, LED stopped changing.");
     end
 
 endmodule
